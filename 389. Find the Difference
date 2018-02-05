@@ -17,7 +17,7 @@ e
 Explanation:
 'e' is the letter that was added.
 """
-```python
+
 class Solution(object):
     def findTheDifference(self, s, t):
         """
@@ -32,7 +32,7 @@ class Solution(object):
         for k in range(len(t)):
             if t[k] not in s_set:
                 return t[k]
-```
+
 """
 Input:
 "a"
