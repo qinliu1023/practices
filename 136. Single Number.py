@@ -24,3 +24,15 @@ class Solution(object):
         for num in nums_freq.keys():
             if nums_freq[num] == 1:
                 return num
+
+# Solutions:
+# https://leetcode.com/problems/single-number/solution/
+# 2∗(a+b+c)−(a+a+b+b+c)=c
+
+class Solution(object):
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return 2 * sum(set(nums)) - sum(nums)
