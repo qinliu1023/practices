@@ -38,7 +38,8 @@ class Solution(object):
         return 2 * sum(set(nums)) - sum(nums)
 
 
-# A similar question can be solved using Math    
+# A similar question can be solved using Math
+# 268. Missing Number
 """
 Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
 
