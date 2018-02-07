@@ -11,7 +11,6 @@ Given nums = [3,2,2,3], val = 3,
 
 Your function should return length = 2, with the first two elements of nums being 2.
 """
-
 class Solution(object):
     def removeElement(self, nums, val):
         """
@@ -24,3 +23,32 @@ class Solution(object):
                 nums.remove(val)
         except:
             return len(nums)
+
+        
+# 283. Move Zeroes        
+"""
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
+
+Note:
+You must do this in-place without making a copy of the array.
+Minimize the total number of operations.
+"""
+class Solution(object):
+    def moveZeroes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        count_0 = nums.count(0)
+        try:
+            while True:
+                nums.remove(0)
+        except:
+            no_0_nums = nums
+        
+        list_0 = [0] * count_0
+        nums = no_0_nums.extend(list_0)
+        
+        return nums
