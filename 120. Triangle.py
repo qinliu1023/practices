@@ -58,3 +58,51 @@ Note: m and n will be at most 100.
 [1,2,3,4,5]
 [1,3,6,10,1]
 """
+
+
+## 300. Longest Increasing Subsequence
+"""
+Given an unsorted array of integers, find the length of longest increasing subsequence.
+
+For example,
+Given [10, 9, 2, 5, 3, 7, 101, 18],
+The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4. 
+Note that there may be more than one LIS combination, it is only necessary for you to return the length.
+
+Your algorithm should run in O(n^2) complexity.
+
+Follow up: Could you improve it to O(nlogn) time complexity?
+"""
+
+"""
+dp = [1,1,1,1,1]
+nums = [5,4,1,2,3]
+curr, val in enumerate(nums)
+(curr,val): [(0,5),(1,4),(2,1),(3,2),(4,3)]
+
+(curr,val) == (1,4)
+	prev [0]:
+		nums[0] == 5 < val == 4 X
+		[1,1,1,1,1]
+
+(curr,val) == (2,1)
+	prev [0,1]:
+		nums[0] == 5 < val == 1 X
+		nums[1] == 4 < val == 1 X
+		[1,1,1,1,1]
+
+(curr,val) == (3,2)
+	prev [0,1,2]:
+		nums[0] == 5 < val == 2 X
+		nums[1] == 4 < val == 2 X	
+		nums[2] == 1 < val == 2 
+		[1,1,1,2,1]
+
+(curr,val) == (4,3)
+	prev [0,1,2,3]:
+		nums[0] == 5 < val == 3 X
+		nums[1] == 4 < val == 3 X
+		nums[2] == 1 < val == 3 
+		nums[3] == 2 < val == 3 		
+		[1,1,1,2,3]
+"""
