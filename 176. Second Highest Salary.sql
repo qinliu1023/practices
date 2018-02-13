@@ -7,6 +7,7 @@ insert into Employee (Id, Salary) values ('2', '200')
 insert into Employee (Id, Salary) values ('3', '300')
 
 
+
 Write a SQL query to get the second highest salary from the Employee table.
 
 +----+--------+
