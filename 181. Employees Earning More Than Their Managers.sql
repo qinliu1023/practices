@@ -38,7 +38,7 @@ FROM (
 WHERE Manager_Salary < Employee_Salary;
 
 
-# Another Solutions
+# Other Solutions
 SELECT
      a.NAME AS Employee
 FROM Employee AS a JOIN Employee AS b
