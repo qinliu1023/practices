@@ -42,7 +42,7 @@ class Solution(object):
         # children greed factor: [1,2,3,4,5,6], cookies size [1,5,5,5], assign 1->1, 5->2, 5->3, and 5->4
         # children greed factor: [2,2,3,4,5,6], cookies size [1,1,5,5], assign 5->2, and 5->2
         # children greed factor: [1,2,3], cookies size [1,7,8,9], assign 1->1, 7->2, 8->3 and break & return
-        # children greed factor: [2,2,3], cookies size [1,1,1,1], assign
+        # children greed factor: [2,2,3], cookies size [1,1,1,1]
         num_children = len(g)
         num_cookies = len(s)
         num_content_children = 0
@@ -130,5 +130,3 @@ class Solution(object):
             j += 1
         return i    
 """
-
-
