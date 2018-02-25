@@ -27,10 +27,15 @@ class Solution(object):
         """
         left, right = 1, n
         while left + 1 < right:
-          mid = (1+n)/2
-          if guess(mid) == -1:
-              left = mid
-          if guess(mid) == 1:
-              right = mid
-                   
-         
+            mid = (left+right)/2
+            if guess(mid) == 0:
+                return mid
+            elif guess(mid) == -1:
+                right = mid
+            elif guess(mid) == 1:
+                left = mid
+
+        if guess(left) == 0:
+            return left
+        else:
+            return right
