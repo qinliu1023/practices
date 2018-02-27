@@ -104,3 +104,5 @@ class Solution(object):
             return min(max(-2147483648, multiple), 2147483647)
         else:
             return min(max(-2147483648, -multiple), 2147483647)
+# Time complexity: O(logn)
+# Space complexity: O(logn)
