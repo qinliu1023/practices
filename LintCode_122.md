@@ -417,8 +417,7 @@ class Solution:
         
         return product
 ```
-##### LeetCode: 238. Product of Array Except Self
-[Youtube](https://www.youtube.com/watch?v=DNE_Gseit9s)
+##### LeetCode: 238. Product of Array Except Self, [YouTube](https://www.youtube.com/watch?v=DNE_Gseit9s)
 
 #### 189. First Missing Positive
 Given an unsorted integer array, find the first missing positive integer.
@@ -449,7 +448,11 @@ class Solution:
         if not A:
             return 1
             
-        # move all nums to the position where index = nums - 1    
+        # move all nums to the position where index = nums - 1
+	# A[i] > 0 and A[i] <= n -> make sure A[i] is in range
+	# A[i] != i + 1 -> check whether it is at right place
+	# A[i] != A[A[i] - 1] -> make sure the num on A[i]'s right position is not 
+	#                        the same as A[i], otherwise, there is no meaning to switch
         for i in range(n):
             while A[i] > 0 and A[i] <= n and \
               A[i] != i + 1 and A[i] != A[A[i] - 1]:
@@ -461,7 +464,7 @@ class Solution:
         
         return n + 1  
 ```
-##### LeetCode: 41. First Missing Positive, [youtube](https://www.youtube.com/watch?v=jfb72FfxWKU)
+##### LeetCode: 41. First Missing Positive, [YouTube](https://www.youtube.com/watch?v=jfb72FfxWKU)
 
 #### 59. 3Sum Closest
 Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers.
