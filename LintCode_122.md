@@ -232,6 +232,292 @@ O(n x m) time and memory.
 
 
 ### 2-Integer Array
+
+#### 172. Remove Element 
+Given an array and a value, remove all occurrences of that value in place and return the new length.
+
+The order of elements can be changed, and the elements after the new length don't matter.
+
+Example
+Given an array [0,4,4,0,0,2,4,4], value=4
+
+return 4 and front four elements of the array is [0,0,0,2]
+```python
+class Solution:
+    """
+    @param: A: A list of integers
+    @param: elem: An integer
+    @return: The new length after remove
+    """
+    def removeElement(self, A, elem):
+        # write your code here
+        try:
+            while True:
+                A.remove(elem)
+        except:
+            return len(A)
+            
+```
+##### LeetCode: 27. Remove Element
+
+#### 138. Subarray Sum
+Given an integer array, find a subarray where the sum of numbers is zero. Your code should return the index of the first number and the index of the last number.
+
+Notice
+There is at least one subarray that it's sum equals to zero.
+
+Example
+Given [-3, 1, 2, -3, 4], return [0, 2] or [1, 3].
+```python
+class Solution:
+    """
+    @param: nums: A list of integers
+    @return: A list of integers includes the index of the first number and the index of the last number
+    """
+    def subarraySum(self, nums):
+        # write your code here
+        for i in range(len(nums)):
+            subarr_sum = nums[i]
+            j = i-1
+            while j >= 0 and subarr_sum != 0:
+                subarr_sum += nums[j]
+                j -= 1
+            return [j+1,i] # Wrong Answer
+```
+
+#### 100. Remove Duplicates from Sorted Array
+Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
+
+Do not allocate extra space for another array, you must do this in place with constant memory.
+
+Example
+Given input array A = [1,1,2],
+
+Your function should return length = 2, and A is now [1,2].
+```python
+class Solution:
+    """
+    @param: nums: An ineger array
+    @return: An integer
+    """
+    def removeDuplicates(self, nums):
+        # write your code here
+        # Examples: [1,1,2] -> [1,2]
+        # [1,2,3,3,4,5,5,7] -> [1,2,3,4,5,7,x,x]
+        # loop from begin to end, each time a new num is encountered, then move it to front
+        
+        if len(nums) == 0:
+            return 0
+        
+        i = 0
+        for j in range(len(nums)):
+            if nums[j] != nums[i]:
+                i += 1
+                nums[i] = nums[j]
+        return i+1        
+```
+##### LeetCode: 26. Remove Duplicates from Sorted Array
+
+#### 64. Merge Sorted Array
+Given two sorted integer arrays A and B, merge B into A as one sorted array.
+
+Notice
+You may assume that A has enough space (size that is greater or equal to m + n) to hold additional elements from B. The number of elements initialized in A and B are m and n respectively.
+
+Example
+A = [1, 2, 3, empty, empty], B = [4, 5]
+
+After merge, A will be filled as [1, 2, 3, 4, 5]
+```python
+class Solution:
+    """
+    @param: A: sorted integer array A which has m elements, but size of A is m+n
+    @param: m: An integer
+    @param: B: sorted integer array B which has n elements
+    @param: n: An integer
+    @return: nothing
+    """
+    def mergeSortedArray(self, A, m, B, n):
+        # write your code here
+        # add B to A
+        A[m:] = B[:n]
+        return A.sort()
+```
+##### LeetCode: 88. Merge Sorted Array
+
+#### 56. Two Sum
+Given an array of integers, find two numbers such that they add up to a specific target number.
+
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are zero-based.
+
+Notice
+You may assume that each input would have exactly one solution
+
+Example
+numbers=[2, 7, 11, 15], target=9
+
+return [0, 1]
+
+Challenge 
+Either of the following solutions are acceptable:
+
+O(n) Space, O(nlogn) Time
+O(n) Space, O(n) Time
+```python
+class Solution:
+    """
+    @param numbers: An array of Integer
+    @param target: target = numbers[index1] + numbers[index2]
+    @return: [index1 + 1, index2 + 1] (index1 < index2)
+    """
+    def twoSum(self, numbers, target):
+        # write your code here
+        for i in range(len(numbers)):
+            for j in range(i):
+                if numbers[i] + numbers[j] == target:
+                    return [j,i]
+```
+
+#### 50. Product of Array Exclude Itself 
+Given an integers array A.
+
+Define B[i] = A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1], calculate B WITHOUT divide operation.
+
+Example
+For A = [1, 2, 3], return [6, 3, 2]
+```python
+class Solution:
+    """
+    @param: nums: Given an integers array A
+    @return: A long long array B and B[i]= A[0] * ... * A[i-1] * A[i+1] * ... * A[n-1]
+    """
+    def productExcludeItself(self, nums):
+        # write your code here
+       
+        n = len(nums)
+        
+        # consider left side first, get a list of array
+        # in which each value is the product of its left numbers
+        # for example: [1,2,3,4] -> [1,1,2,6] name as left_product
+        # left_product[2] = nums[0]*nums[1]
+        # left_product[3] = nums[0]*nums[1]*nums[2]
+        multipler = 1
+        left_product = []
+        for i in range(0,n):
+            left_product.append(multipler)
+            multipler = multipler * nums[i]
+        
+        # Then take right into consideration
+        # right is a integer and records the product of all elements at i's right
+        product = left_product
+        right = 1
+        for i in range(n-1,-1,-1):
+            product[i] = product[i] * right
+            right = right * nums[i]
+        
+        return product
+```
+##### LeetCode: 238. Product of Array Except Self
+[Youtube](https://www.youtube.com/watch?v=DNE_Gseit9s)
+
+#### 189. First Missing Positive
+Given an unsorted integer array, find the first missing positive integer.
+
+Example
+Given [1,2,0] return 3,
+and [3,4,-1,1] return 2.
+
+Challenge 
+Your algorithm should run in O(n) time and uses constant space.
+```python
+class Solution:
+    """
+    @param A: An array of integers
+    @return: An integer
+    """
+    def firstMissingPositive(self, A):
+        # write your code here
+        n = len(A)
+        
+        # [98,99,100] -> return 1
+        # 0 is not positive
+        # n = len(A) then should contain 1,2,3,...,n
+        # if A = [1,2,3,...,n], then return n+1
+        # index [0,1,2,3,4]
+        # number should be [1,2,3,4,5]
+        # the first missing positive is the position where the number != index + 1
+        if not A:
+            return 1
+            
+        # move all nums to the position where index = nums - 1    
+        for i in range(n):
+            while A[i] > 0 and A[i] <= n and \
+              A[i] != i + 1 and A[i] != A[A[i] - 1]:
+                A[A[i] - 1], A[i] = A[i], A[A[i] - 1]
+        
+        for i in range(n):
+            if i + 1 != A[i]:
+                return i + 1
+        
+        return n + 1  
+```
+##### LeetCode: 41. First Missing Positive, [youtube](https://www.youtube.com/watch?v=jfb72FfxWKU)
+
+#### 59. 3Sum Closest
+Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers.
+
+Notice
+You may assume that each input would have exactly one solution.
+
+Example
+For example, given array S = [-1 2 1 -4], and target = 1. The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+
+Challenge 
+O(n^2) time, O(1) extra space
+```python
+
+```
+
+#### 57. 3Sum
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Notice
+Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
+
+The solution set must not contain duplicate triplets.
+
+Example
+For example, given array S = {-1 0 1 2 -1 -4}, A solution set is:
+
+(-1, 0, 1)
+(-1, -1, 2)
+```python
+
+```
+
+#### 31. Partition Array
+Given an array nums of integers and an int k, partition the array (i.e move the elements in "nums") such that:
+
+All elements < k are moved to the left
+All elements >= k are moved to the right
+Return the partitioning index, i.e the first index i nums[i] >= k.
+
+Notice
+You should do really partition in array nums instead of just counting the numbers of integers smaller than k.
+
+If all elements in nums are smaller than k, then return nums.length
+
+Example
+If nums = [3,2,2,1] and k=2, a valid answer is 1.
+
+Challenge 
+Can you partition the array in-place and in O(n)?
+```python
+
+```
+
+[Difference between sorted() and .sort()](https://stackoverflow.com/questions/22442378/what-is-the-difference-between-sortedlist-vs-list-sort-python)
+
 ### 3-Binary Search
 ### 4-Math & Bit Manipulation
 ### 5-Greedy
