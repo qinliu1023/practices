@@ -76,12 +76,10 @@ Notice
 All inputs will be in lower-case
 
 Example
-	Given ["lint", "intl", "inlt", "code"], return ["lint", "inlt", "intl"].
-	Given ["ab", "ba", "cd", "dc", "e"], return ["ab", "ba", "cd", "dc"].
+Given ["lint", "intl", "inlt", "code"], return ["lint", "inlt", "intl"].
+Given ["ab", "ba", "cd", "dc", "e"], return ["ab", "ba", "cd", "dc"].
 
-Challenge 
-What is Anagram?
-- Two strings are anagram if they can be the same after change the order of characters.
+What is Anagram? - Two strings are anagram if they can be the same after change the order of characters.
 ```python
 class Solution:
     """
@@ -143,6 +141,71 @@ class Solution:
         return common_prefix		
 ```
 
+#### 13. strStr 
+For a given source string and a target string, you should output the first index(from 0) of target string in source string.
+
+If target does not exist in source, just return -1.
+
+Clarification
+Do I need to implement KMP Algorithm in a real interview?
+
+- Not necessary. When you meet this problem in a real interview, the interviewer may just want to test your basic implementation ability. But make sure you confirm with the interviewer first.
+Example
+If source = "source" and target = "target", return -1.
+
+If source = "abcdabcdefg" and target = "bcd", return 1.
+
+Challenge 
+O(n2) is acceptable. Can you implement an O(n) algorithm? (hint: KMP)
+```python
+class Solution:
+    """
+    @param: source: source string to be scanned.
+    @param: target: target string containing the sequence of characters to match
+    @return: a index to the first occurrence of target in source, or -1  if target is not part of source.
+    """
+    def strStr(self, source, target):
+        # write your code here
+        if source is None or target is None:
+            return -1
+        
+        for i in range(len(source) - len(target) + 1):
+            if source[i:i+len(target)] == target:
+                return i
+        return -1 
+```
+##### LeetCode: 28. Implement strStr()
+Implement [strStr()](http://www.cplusplus.com/reference/cstring/strstr/).
+
+Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+Example 1:
+	Input: haystack = "hello", needle = "ll"
+	Output: 2
+
+Example 2:
+	Input: haystack = "aaaaa", needle = "bba"
+	Output: -1
+```python
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if haystack is None or needle is None:
+            return -1
+        
+        for i in range(len(haystack) - len(needle) + 1):
+            if haystack[i:i+len(needle)] == needle:
+                return i
+        return -1
+```
+[KMP](https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm)
+
+Here is another solution using nested loop [link](https://algorithm.yuanbin.me/en/string/strstr.html#python)
+
 #### 79. Longest Common Substring
 Given two strings, find the longest common substring.
 
@@ -159,7 +222,11 @@ O(n x m) time and memory.
 ```python
 
 ```
+[Algorithm Implementation/Strings/Longest common substring](https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Longest_common_substring)
 
+[jiuzhang.com](https://www.jiuzhang.com/solution/longest-common-substring/#tag-highlight-lang-python)
+
+[Telling the length of the highest common substring](https://codereview.stackexchange.com/questions/179668/telling-the-length-of-the-highest-common-substring-between-2-words)
 
 
 
