@@ -56,7 +56,7 @@ class Solution(object):
         :type x: int
         :rtype: List[int]
         """
-		import collections
+	import collections
         distance = collections.defaultdict(list)
         for num in arr:
             distance[abs(num-x)].append(num)
