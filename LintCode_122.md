@@ -623,6 +623,222 @@ class Solution:
 [Difference between sorted() and .sort()](https://stackoverflow.com/questions/22442378/what-is-the-difference-between-sortedlist-vs-list-sort-python)
 
 ### 3-Binary Search
+
+#### 141. Sqrt(x) 
+Implement int sqrt(int x).
+
+Compute and return the square root of x.
+
+Example
+sqrt(3) = 1
+
+sqrt(4) = 2
+
+sqrt(5) = 2
+
+sqrt(10) = 3
+
+Challenge 
+O(log(x))
+```python
+class Solution:
+    """
+    @param x: An integer
+    @return: The sqrt of x
+    """
+    def sqrt(self, x):
+        # write your code here
+        if x == 0:
+            return 0
+        
+        low, high = 1, x
+        while low <= high:
+            mid = (low + high) / 2
+            if mid * mid == x:
+                return mid
+            elif mid * mid < x:
+                low = mid + 1
+            else:
+                high = mid - 1
+        
+        if high * high < x:
+            return high
+        else:
+            return low
+        
+```
+##### LeetCode: 69. Sqrt(x), [YouTube](https://www.youtube.com/watch?v=RR0Af3CTNhE)
+
+
+#### 60. Search Insert Position
+Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You may assume NO duplicates in the array.
+
+Example
+[1,3,5,6], 5 → 2
+
+[1,3,5,6], 2 → 1
+
+[1,3,5,6], 7 → 4
+
+[1,3,5,6], 0 → 0
+
+Challenge 
+O(log(n)) time
+
+```python
+class Solution:
+    """
+    @param A: an integer sorted array
+    @param target: an integer to be inserted
+    @return: An integer
+    """
+    def searchInsert(self, A, target):
+        # write your code here
+        if not A:
+            return 0
+        
+        n = len(A)
+        if A[n-1] < target:
+            return n
+        elif A[0] >= target:
+            return 0
+        else:
+            for i in range(len(A)):
+                if A[i] < target and A[i+1] >= target:
+                    return i+1
+```                    
+##### LeetCode: 35. Search Insert Position
+
+
+#### 28. Search a 2D Matrix
+Write an efficient algorithm that searches for a value in an m x n matrix.
+
+This matrix has the following properties:
+
+Integers in each row are sorted from left to right.
+The first integer of each row is greater than the last integer of the previous row.
+
+Example
+Consider the following matrix:
+
+[
+    [1, 3, 5, 7],
+    [10, 11, 16, 20],
+    [23, 30, 34, 50]
+]
+Given target = 3, return true.
+
+Challenge 
+O(log(n) + log(m)) time
+```python
+class Solution:
+    """
+    @param: matrix: matrix, a list of lists of integers
+    @param: target: An integer
+    @return: a boolean, indicate whether matrix contains target
+    """
+    def searchMatrix(self, matrix, target):
+        # write your code here
+        # rows = len(matrix)
+        # cols = len(matrix[0])
+        
+        if not matrix or len(matrix) == 0:
+            return False
+            
+        matrix_to_list = []
+        rows = len(matrix)
+        for i in range(rows):
+            matrix_to_list.extend(matrix[i])
+        
+        cols = len(matrix[0])
+        
+        left, right = 0, rows * cols - 1
+        while left + 1 < right:
+            mid = (left + right) / 2
+            if matrix_to_list[mid] == target:
+                return True
+            elif matrix_to_list[mid] < target:
+                left = mid
+            else:
+                right = mid
+        
+        if matrix_to_list[left] == target:
+            return True
+        elif matrix_to_list[right] == target:
+            return True
+        else:
+            return False
+```
+##### LeetCode: 74. Search a 2D Matrix, [YouTube](https://www.youtube.com/watch?v=F8nwWNRCVkE)
+Above Code has a RunTime Error in LeetCode.
+```python
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix or len(matrix) == 0:
+            return False
+            
+        rows, cols = len(matrix), len(matrix[0])
+        begin, end = 0, rows*cols-1
+        while begin <= end:
+            mid = (begin + end) / 2
+            i, j = mid / cols, mid % cols
+            if matrix[i][j] == target:
+                return True
+            elif matrix[i][j] < target:
+                begin = mid + 1
+            else:
+                end = mid - 1
+        
+        return False
+"""
+rows = 3, cols = 4
+begin, end = 0, 11
+mid = 5 --> i, j = 5/4, 5%4 = 1, 1
+			mid = i * cols + j
+"""        
+```
+
+#### 14. First Position of Target 
+For a given sorted array (ascending order) and a target number, find the first index of this number in O(log n) time complexity.
+
+If the target number does not exist in the array, return -1.
+
+Example
+If the array is [1, 2, 3, 3, 4, 5, 10], for given target 3, return 2.
+
+Challenge 
+If the count of numbers is bigger than 2^32, can your code work properly?
+```python
+class Solution:
+    """
+    @param nums: The integer array.
+    @param target: Target to find.
+    @return: The first position of target. Position starts from 0.
+    """
+    def binarySearch(self, nums, target):
+        # write your code here
+        low, high = 0, len(nums)-1
+        while low + 1 < high:
+            mid = (low + high) / 2
+            if nums[mid] < target:
+                low = mid
+            else:
+                high = mid
+        
+        if nums[low] == target :
+            return low
+        elif nums[high] == target :
+            return high
+        return -1;
+```
+
 ### 4-Math & Bit Manipulation
 ### 5-Greedy
 ### 6-Linked List
