@@ -838,6 +838,265 @@ class Solution:
             return high
         return -1;
 ```
+#### 159. Find Minimum in Rotated Sorted Array 
+Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+
+(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+Find the minimum element.
+
+Notice
+You may assume no duplicate exists in the array.
+
+Example
+Given [4, 5, 6, 7, 0, 1, 2] return 0
+```python
+class Solution:
+    """
+    @param nums: a rotated sorted array
+    @return: the minimum number in the array
+    """
+    def findMin(self, nums):
+        # write your code here
+        for i in range(len(nums)-1):
+            if nums[i+1] < nums[i]:
+                return nums[i+1]
+        return nums[0]
+
+### Using Binary Search
+class Solution:
+    """
+    @param nums: a rotated sorted array
+    @return: the minimum number in the array
+    """
+    def findMin(self, nums):
+        # write your code here
+        left, right = 0, len(nums)-1
+        
+        # Only need to consider right "half" of the array
+        while left + 1 < right:
+            mid = (left + right) / 2              
+            if nums[mid] < nums[right]:
+                right = mid
+            else:
+            	left = mid + 1    
+
+
+        if nums[left] < nums[right]:
+            return nums[left]
+        else:
+            return nums[right]
+```
+##### Leetcode: 153 Find Minimum in Rotated Sorted Array
+
+#### 62. Search in Rotated Sorted Array 
+Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+
+(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+You are given a target value to search. If found in the array return its index, otherwise return -1.
+
+You may assume no duplicate exists in the array.
+
+Example
+For [4, 5, 1, 2, 3] and target=1, return 2.
+
+For [4, 5, 1, 2, 3] and target=0, return -1.
+
+Challenge 
+O(logN) time
+```python
+class Solution:
+    """
+    @param A: an integer rotated sorted array
+    @param target: an integer to be searched
+    @return: an integer
+    """
+    def search(self, A, target):
+        # write your code here
+        if not A or len(A) == 0:
+            return -1
+        
+        left, right = 0, len(A)-1
+        
+        while left + 1 < right:
+            mid = (left + right) / 2
+            if A[mid] == target:
+                return mid
+            if A[left] < A[mid]:# left to mid is in ascending order
+                if A[left] <= target and target <= A[mid]:
+                    right = mid
+                else:    
+                    left = mid
+            else: # mid to right is in ascending order
+                if A[mid] <= target and target <= A[right]:
+                    left = mid
+                else:    
+                    right = mid
+ 
+        if A[left] == target:
+            return left
+        elif A[right] == target:
+            return right
+        else:
+            return -1    
+```
+##### LeetCode: 33. Search in Rotated Sorted Array
+
+#### 61. Search for a Range 
+Given a sorted array of n integers, find the starting and ending position of a given target value.
+
+If the target is not found in the array, return [-1, -1].
+
+Example
+Given [5, 7, 7, 8, 8, 10] and target value 8,
+return [3, 4].
+
+Challenge 
+O(log n) time.
+```python
+class Solution:
+    """
+    @param A: an integer sorted array
+    @param target: an integer to be inserted
+    @return: a list of length 2, [index1, index2]
+    """
+    def searchRange(self, A, target):
+        # write your code here
+        if len(A) == 0 or A[0] > target or A[len(A)-1] < target:
+            return [-1,-1]
+            
+        left, right = 0, len(A)-1
+        while left + 1 < right:
+            mid = (left+ right)/2
+            if A[mid] >= target:
+                right = mid
+            else:
+                left = mid
+        if A[left] == target:
+            low = left
+        elif A[right] == target:
+            low = right
+        else:
+            low = -1
+        
+        left, right = 0, len(A)-1
+        while left + 1 < right:
+            mid = (left+ right)/2
+            if A[mid] <= target:
+                left = mid
+            else:
+                right = mid
+        if A[right] == target:
+            high = right
+        elif A[left] == target:
+            high = left
+        else:
+            high = -1
+            
+        return [low, high]
+```
+##### LeetCode: 34. Search for a Range
+
+
+#### 75. Find Peak Element 
+There is an integer array which has the following features:
+
+The numbers in adjacent positions are different.
+A[0] < A[1] && A[A.length - 2] > A[A.length - 1].
+We define a position P is a peak if:
+
+A[P] > A[P-1] && A[P] > A[P+1]
+Find a peak element in this array. Return the index of the peak.
+
+Notice
+It's guaranteed the array has at least one peak.
+The array may contain multiple peeks, find any of them.
+The array has at least 3 numbers in it.
+
+Example
+Given [1, 2, 1, 3, 4, 5, 7, 6]
+
+Return index 1 (which is number 2) or 6 (which is number 7)
+
+Challenge 
+Time complexity O(logN)
+```python
+class Solution:
+    """
+    @param: A: An integers array.
+    @return: return any of peek positions.
+    """
+    def findPeak(self, A):
+        # write your code here
+        left, right = 0, len(A)-1
+        while left + 1 < right:
+            mid = (left + right) / 2
+            if A[mid] > A[mid + 1]:
+                right = mid
+            else:
+                left = mid + 1  
+
+        if A[left] > A[right]:
+            return left
+        else:
+            return right
+```
+##### LeetCode: 162. Find Peak Element
+
+
+#### 183. Wood Cut 
+Given n pieces of wood with length L[i] (integer array). Cut them into small pieces to guarantee you could have equal or more than k pieces with the same length. What is the longest length you can get from the n pieces of wood? Given L & k, return the maximum length of the small pieces.
+
+Notice
+You couldn't cut wood into float length.
+
+If you couldn't get >= k pieces, return 0.
+
+Example
+For L=[232, 124, 456], k=7, return 114.
+
+Challenge 
+O(n log Len), where Len is the longest length of the wood.
+```python
+class Solution:
+    """
+    @param L: Given n pieces of wood with length L[i]
+    @param k: An integer
+    @return: The maximum length of the small pieces
+    """
+    def woodCut(self, L, k):
+        # write your code here
+        
+        # if the total length of given wood is less than k
+        # we could not get >= k pieces
+        if sum(L) < k:
+            return 0
+            
+        maxLen = max(L)
+        low, high = 1, max(L)
+        
+        # find number of pieces we can get for a possible small piece
+        # for length x in range(low, high), we add up L[i]/x, i in range(len(L))
+        # get sum[x], if sum[x] >= k, the x is one candicate
+        # after tranverse all possible x, we choose the largest one
+        # using binary search, to reduce complexity
+        while low + 1 < high:
+            mid = (low + high) / 2
+            
+            small_piece_nums = 0
+            for length in L:
+                small_piece_nums += (length/mid)
+           
+            if small_piece_nums >= k:
+                low = mid
+            else:
+                high = mid
+                
+        if sum([length / high for length in L]) >= k:
+            return high
+        return low
+```
 
 ### 4-Math & Bit Manipulation
 ### 5-Greedy
