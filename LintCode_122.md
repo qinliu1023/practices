@@ -277,12 +277,17 @@ class Solution:
     def subarraySum(self, nums):
         # write your code here
         for i in range(len(nums)):
+            if nums[i] == 0:
+                return [i,i]
+                
             subarr_sum = nums[i]
-            j = i-1
-            while j >= 0 and subarr_sum != 0:
-                subarr_sum += nums[j]
-                j -= 1
-            return [j+1,i] # Wrong Answer
+            right = i+1
+            while right < len(nums):
+                subarr_sum += nums[right]
+                if subarr_sum == 0:
+                    return [i,right]
+                else:
+                    right += 1
 ```
 
 #### 100. Remove Duplicates from Sorted Array
@@ -478,8 +483,34 @@ For example, given array S = [-1 2 1 -4], and target = 1. The sum that is closes
 Challenge 
 O(n^2) time, O(1) extra space
 ```python
-
+class Solution:
+    """
+    @param numbers: Give an array numbers of n integer
+    @param target: An integer
+    @return: return the sum of the three integers, the sum closest target.
+    """
+    def threeSumClosest(self, numbers, target):
+        # write your code here
+        numbers.sort()
+        
+        closest = numbers[0] + numbers[1] + numbers[2]
+        
+        for i in range(len(numbers)-2):
+            low = i+1
+            high = len(numbers)-1
+            
+            while low < high:
+                sums = numbers[i] + numbers[low] + numbers[high]
+                if sums > target:
+                    high -= 1
+                else:
+                    low += 1
+                if abs(closest-target) > abs(sums-target):
+                    closest = sums
+        
+        return closest
 ```
+##### LeetCode: 16. 3Sum Closest, [YouTube](https://www.youtube.com/watch?v=nk6DuCxb8zI)
 
 #### 57. 3Sum
 Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
@@ -495,8 +526,45 @@ For example, given array S = {-1 0 1 2 -1 -4}, A solution set is:
 (-1, 0, 1)
 (-1, -1, 2)
 ```python
-
+class Solution:
+    """
+    @param: numbers: Give an array numbers of n integer
+    @return: Find all unique triplets in the array which gives the sum of zero.
+    """
+    def threeSum(self, numbers):
+        # write your code here
+        # fix one number and find another two equals 0-number
+        # as elements in a triplet must be in non-descending order
+        # sort numbers first
+        numbers.sort()
+        
+        output = []
+        for i in range(len(numbers)-2):
+            # duplicat triplet should not be contained
+            if i > 0 and numbers[i] == numbers[i-1]:
+                continue
+            
+            low = i + 1
+            high = len(numbers)-1
+            two_sums = 0- numbers[i]
+            
+            while low < high:
+                if numbers[low] + numbers[high] == two_sums:
+                    output.append((numbers[i],numbers[low], numbers[high]))
+                    while low < high and numbers[low] == numbers[low+1]:
+                        low += 1
+                    while low < high and numbers[high] == numbers[high-1]:
+                        high -= 1
+                    low += 1
+                    high -= 1
+                elif numbers[low] + numbers[high] < two_sums:
+                    low += 1
+                else:
+                    high -= 1
+        
+        return output        
 ```
+##### LeetCode: 15.3Sum, [YouTube](https://www.youtube.com/watch?v=mNzUMPBiRX4)
 
 #### 31. Partition Array
 Given an array nums of integers and an int k, partition the array (i.e move the elements in "nums") such that:
@@ -516,7 +584,40 @@ If nums = [3,2,2,1] and k=2, a valid answer is 1.
 Challenge 
 Can you partition the array in-place and in O(n)?
 ```python
+class Solution:
+    """
+    @param nums: The integer array you should partition
+    @param k: An integer
+    @return: The index after partition
+    """
+    def partitionArray(self, nums, k):
+        # write your code here
 
+        # need to return first index i nums[i] >= k.
+        # final nums could be [1,2,3,6,5,7], k = 5
+        # no need to be [1,2,3,5,6,7], k = 5
+        # no need for i > k locates at right of i
+        # and for i < k locates at left of i
+        low = 0
+        high = len(nums)-1
+        
+        while low <= high:
+            # once find the first low where nums[low] >=  k 
+            # goes to second inner while and find the first high where nums[high] < k
+            # if low < high, swith their values, and update low and high by +/- 1
+            # then goes to outer while check whether low <= high or not
+            # if true, goes to inner whiles to find the 2nd, 3rd,... pair of low and high
+            # and do number switch
+            while low <= high and nums[low] < k: 
+                low += 1
+            while low <= high and nums[high] >= k:
+                high -= 1
+            if low <= high:
+                nums[low], nums[high] = nums[high], nums[low]
+                low += 1
+                high -= 1
+        
+        return low
 ```
 
 [Difference between sorted() and .sort()](https://stackoverflow.com/questions/22442378/what-is-the-difference-between-sortedlist-vs-list-sort-python)
