@@ -1150,7 +1150,159 @@ class Solution:
 ```
 
 ### 4-Math & Bit Manipulation
+#### 181. Flip Bits 
+Determine the number of bits required to flip if you want to convert integer n to integer m.
 
+Notice
+Both n and m are 32-bit integers.
+
+Example
+Given n = 31 (11111), m = 14 (01110), return 2.
+```python
+class Solution:
+    """
+    @param a, b: Two integer
+    return: An integer
+    """
+    def bitSwapRequired(self, a, b):
+        # write your code here
+        c = a ^ b 
+        cnt = 0   
+        for i in xrange(32):
+            if c & (1 << i) != 0: 
+                cnt += 1		  
+        return cnt
+# copies the bit if it is set in only a or only b.
+# &: copies a bit to the result if it exists in both operands        
+# <<: The left value is moved left by the number of bits specified by the right value. 
+"""
+e.g. 
+a = 60            # 60 = 0... 0011 1100 
+b = 13            # 13 = 0... 0000 1101 
+c = a ^ b;        # 49 = 0... 0011 0001
+
+index 			  0            31 					
+i = 0 --> 1 << i: 0... 0000 0001 --> c & i != 0 checks whether bit at c[31], 
+									 if returns 0, c[31] == 0, means a and b are the same at this postion
+i = 1 --> 1 << i: 0... 0000 0010 --> 
+i = 2 --> 1 << i: 0... 0000 0100 --> 
+"""
+```
+##### [jiuzhang.com](http://www.jiuzhang.com/solution/flip-bits/#tag-highlight-lang-python)
+##### [Bitwose Operation Examples](https://www.tutorialspoint.com/python/bitwise_operators_example.htm)
+##### [Python Basic Operators]（https://www.tutorialspoint.com/python/python_basic_operators.htm）
+
+
+#### 142. O(1) Check Power of 2 
+Using O(1) time to check whether an integer n is a power of 2.
+
+Example
+For n=4, return true;
+
+For n=5, return false;
+
+Challenge 
+O(1) time
+```python
+class Solution:
+    """
+    @param n: An integer
+    @return: True or false
+    """
+    def checkPowerOf2(self, n):
+        # write your code here
+        # power of two: 0001, 0010, 0100, 1000
+        # 2^(i+1) is 2^i move left by 1 position
+        # set value equal to 1 and move left by 1 each time
+        # compare input n with value
+        # 32 bits, max 2^31 − 1
+        value = 1
+        for i in xrange(31):
+            if value == n:
+                return True
+            value = value << 1
+ 
+        return False 
+```
+
+
+#### 2. Trailing Zeros 
+Write an algorithm which computes the number of trailing zeros in n factorial.
+
+Example
+11! = 39916800, so the out should be 2
+
+Challenge 
+O(log N) time
+```python
+
+```
+##### [jiuzhang](http://www.jiuzhang.com/solution/trailing-zeros/#tag-highlight-lang-python)
+##### [Blog](http://blog.csdn.net/surp2011/article/details/51168272)
+
+
+#### 179. Update Bits 
+Given two 32-bit numbers, N and M, and two bit positions, i and j. Write a method to set all bits between i and j in N equal to M (e g , M becomes a substring of N located at i and starting at j)
+
+Notice
+In the function, the numbers N and M will given in decimal, you should also return a decimal number.
+
+Clarification
+You can assume that the bits j through i have enough space to fit all of M. That is, if M=10011， you can assume that there are at least 5 bits between j and i. You would not, for example, have j=3 and i=2, because M could not fully fit between bit 3 and bit 2.
+
+Example
+Given N=(10000000000)2, M=(10101)2, i=2, j=6
+
+return N=(10001010100)2
+
+Challenge 
+Minimum number of operations?
+```python
+```
+##### [jiuzhang](http://www.jiuzhang.com/solution/update-bits/#tag-highlight-lang-python)
+
+
+#### 163. Unique Binary Search Trees 
+Given n, how many structurally unique BSTs (binary search trees) that store values 1...n?
+
+Example
+Given n = 3, there are a total of 5 unique BST's.
+
+1           3    3       2      1
+ \         /    /       / \      \
+  3      2     1       1   3      2
+ /      /       \                  \
+2     1          2                  3
+```python
+```
+##### [jiuzhang](http://www.jiuzhang.com/solution/unique-binary-search-trees/#tag-highlight-lang-python)
+
+#### 140. Fast Power 
+Calculate the a^n % b where a, b and n are all 32bit integers.
+
+Example
+For 2^31 % 3 = 2
+
+For 100^1000 % 1000 = 0
+
+Challenge 
+O(logn)
+```python
+```
+##### [jiuzhang](http://www.jiuzhang.com/solution/fast-power/#tag-highlight-lang-python)
+
+
+#### 180. Binary Representation 
+Given a (decimal - e.g. 3.72) number that is passed in as a string, return the binary representation that is passed in as a string. If the fractional part of the number can not be represented accurately in binary with at most 32 characters, return ERROR.
+
+Example
+For n = "3.72", return "ERROR".
+
+For n = "3.5", return "11.1".
+```python
+
+```
+##### [jiuzhang](http://www.jiuzhang.com/solution/binary-representation/#tag-highlight-lang-python)
 
 ### 5-Greedy
 #### 82. Single Number
@@ -1228,6 +1380,27 @@ class Solution:
 
 ```
 
+#### 187. Gas Station 
+There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.
+
+Return the starting gas station's index if you can travel around the circuit once, otherwise return -1.
+
+Notice
+The solution is guaranteed to be unique.
+
+Example
+Given 4 gas stations with gas[i]=[1,1,3,1], and the cost[i]=[2,2,1,1]. The starting gas station's index is 2.
+
+Challenge 
+O(n) time and O(1) extra space
+```python
+
+
+```
+##### LeetCode: 134. Gas Station
+
 #### 184. Largest Number
 Given a list of non negative integers, arrange them such that they form the largest number.
 
@@ -1235,17 +1408,119 @@ Notice
 The result may be very large, so you need to return a string instead of an integer.
 
 Example
-Given [1, 20, 23, 4, 8], the largest formed number is 8423201.
+Given \[1, 20, 23, 4, 8], the largest formed number is 8423201.
 
 Challenge 
 Do it in O(nlogn) time complexity.
 ```python
 ```
 ##### LeetCode: 179. Largest Number
-##### [Sort() using cmp](https://stackoverflow.com/questions/34159437/sort-in-python-using-cmp)
-##### [How to Sorting](https://wiki.python.org/moin/HowTo/Sorting)
-##### [cmp()](https://docs.python.org/2/reference/datamodel.html#object.__cmp__)
-##### [lambda](https://docs.python.org/3.5/tutorial/controlflow.html#lambda-expressions)
+####### [Sort() using cmp](https://stackoverflow.com/questions/34159437/sort-in-python-using-cmp)
+####### [How to Sorting](https://wiki.python.org/moin/HowTo/Sorting)
+####### [cmp()](https://docs.python.org/2/reference/datamodel.html#object.__cmp__)
+####### [lambda](https://docs.python.org/3.5/tutorial/controlflow.html#lambda-expressions)
+
+#### 182. Delete Digits 
+Given string A representative a positive integer which has N digits, remove any k digits of the number, the remaining digits are arranged according to the original order to become a new positive integer.
+
+Find the smallest integer after remove k digits.
+
+N <= 240 and k <= N,
+
+Example
+Given an integer A = "178542", k = 4
+
+return a string "12"
+```python
+class Solution:
+    """
+    @param: A: A positive integer which has N digits, A is a string
+    @param: l: Remove k digits
+    @return: A string
+    """
+    def DeleteDigits(self, A, l):
+        # write your code here
+        # if numbers in string A is in ascending order
+        # remove last k digits will lead to the samllest integer
+        # if numbers in string A is i n random order
+        # remove A[i] if A[i] > A[i+1]
+
+        A = list(A)
+        while l > 0:
+            f = True
+            for i in xrange(len(A)-1):
+                if A[i] > A[i+1]:
+                    del A[i]
+                    f = False
+                    break     
+            if f and len(A)>1:
+                A.pop()
+            l -= 1
+        while len(A)>1 and A[0]=='0':
+            del A[0]
+        return ''.join(A)
+```
+
+#### 116. Jump Game 
+Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+Each element in the array represents your maximum jump length at that position.
+
+Determine if you are able to reach the last index.
+
+Notice
+This problem have two method which is Greedy and Dynamic Programming.
+
+The time complexity of Greedy method is O(n).
+
+The time complexity of Dynamic Programming method is O(n^2).
+
+We manually set the small data set to allow you pass the test in both ways. This is just to let you learn how to use this problem in dynamic programming ways. If you finish it in dynamic programming ways, you can try greedy method to make it accept again.
+
+Example
+A = \[2,3,1,1,4], return true.
+
+A = \[3,2,1,0,4], return false.
+```python
+class Solution:
+    """
+    @param: A: A list of integers
+    @return: A boolean
+    """
+    def canJump(self, A):
+        # write your code here
+        # find out the maximum jump at current position
+        
+        max_pos = 0
+
+        for i in range(len(A)):
+            if i > max_pos:
+                return False
+            max_pos = max(A[i] + i, max_pos)
+
+        return True  
+```
+##### LeetCode: Leetcode 55 Jump Game, [YouTube](https://www.youtube.com/watch?v=C8Cydo3NfgM)
+
+
+#### 52. Next Permutation 
+Given a list of integers, which denote a permutation.
+
+Find the next permutation in ascending order.
+
+Notice
+The list may contains duplicate integers.
+
+Example
+For \[1,3,2,3], the next permutation is \[1,3,3,2]
+
+For \[4,3,2,1], the next permutation is \[1,2,3,4]
+```python
+
+```
+##### LeetCode: 31 Next Permutation, [YouTube](https://www.youtube.com/watch?v=9mdoM2dVid8)
+
+
 
 
 ### 6-Linked List
