@@ -998,6 +998,57 @@ class Solution:
 ```
 ##### LeetCode: 34. Search for a Range
 
+#### 74. First Bad Version 
+The code base version is an integer start from 1 to n. One day, someone committed a bad version in the code case, so it caused this version and the following versions are all failed in the unit tests. Find the first bad version.
+
+You can call isBadVersion to help you determine which version is the first bad one. The details interface can be found in the code's annotation part.
+
+Notice
+Please read the annotation in code area to get the correct way to call isBadVersion in different language. For example, Java is SVNRepo.isBadVersion(v)
+
+Example
+Given n = 5:
+
+isBadVersion(3) -> false
+isBadVersion(5) -> true
+isBadVersion(4) -> true
+Here we are 100% sure that the 4th version is the first bad version.
+
+Challenge 
+You should call isBadVersion as few as possible.
+```python
+"""
+class SVNRepo:
+    @classmethod
+    def isBadVersion(cls, id)
+        # Run unit tests to check whether verison `id` is a bad version
+        # return true if unit tests passed else false.
+You can use SVNRepo.isBadVersion(10) to check whether version 10 is a 
+bad version.
+"""
+
+class Solution:
+    """
+    @param: n: An integer
+    @return: An integer which is the first bad version.
+    """
+    def findFirstBadVersion(self, n):
+        # write your code here
+        left = 1
+        right = n
+        while left + 1 < right:
+            mid = (right+left)/2
+            if SVNRepo.isBadVersion(mid) == True:
+                right = mid 
+            else:
+                left = mid
+                
+        if SVNRepo.isBadVersion(left) == True:
+            return left
+        else:
+            return right 
+```
+##### LeetCode: 278. First Bad Version
 
 #### 75. Find Peak Element 
 There is an integer array which has the following features:
@@ -1099,7 +1150,104 @@ class Solution:
 ```
 
 ### 4-Math & Bit Manipulation
+
+
 ### 5-Greedy
+#### 82. Single Number
+Given 2\*n + 1 numbers, every numbers occurs twice except one, find it.
+
+Example
+Given [1,2,2,1,3,4,3], return 4
+
+Challenge 
+One-pass, constant extra space.
+```python
+class Solution:
+    """
+    @param A: An integer array
+    @return: An integer
+    """
+    def singleNumber(self, A):
+        # write your code here
+        return 2 * sum(set(A)) - sum(A)
+```
+##### LeetCode: 136. Single Number
+
+
+#### 46. Majority Number 
+Given an array of integers, the majority number is the number that occurs more than half of the size of the array. Find it.
+
+Notice
+You may assume that the array is non-empty and the majority number always exist in the array.
+
+Example
+Given [1, 1, 1, 1, 2, 2, 2], return 1
+
+Challenge 
+O(n) time and O(1) extra space
+```python
+class Solution:
+    """
+    @param: nums: a list of integers
+    @return: find a  majority number
+    """
+    def majorityNumber(self, nums):
+        # write your code here
+        # use a dictionary to store num and its frequency
+        nums_dict = {}
+        for i in range(len(nums)):
+            if nums[i] not in nums_dict.keys():
+                nums_dict[nums[i]] = 1
+            else:
+                nums_dict[nums[i]] += 1
+        
+        values = sorted(nums_dict.values()) 
+        
+        max_freq = values[len(values)-1]
+        
+        for key in nums_dict.keys():
+            if nums_dict[key] == max_freq:
+                return key
+
+# Solution 2
+class Solution:
+    """
+    @param: nums: a list of integers
+    @return: find a  majority number
+    """
+    def majorityNumber(self, nums):
+        # write your code here
+        # using count
+        max_freq = 1
+        output = nums[0]
+        for num in nums:
+            if max_freq < nums.count(num):
+                max_freq = nums.count(num)
+                output = num
+        return output        
+
+```
+
+#### 184. Largest Number
+Given a list of non negative integers, arrange them such that they form the largest number.
+
+Notice
+The result may be very large, so you need to return a string instead of an integer.
+
+Example
+Given [1, 20, 23, 4, 8], the largest formed number is 8423201.
+
+Challenge 
+Do it in O(nlogn) time complexity.
+```python
+```
+##### LeetCode: 179. Largest Number
+##### [Sort() using cmp](https://stackoverflow.com/questions/34159437/sort-in-python-using-cmp)
+##### [How to Sorting](https://wiki.python.org/moin/HowTo/Sorting)
+##### [cmp()](https://docs.python.org/2/reference/datamodel.html#object.__cmp__)
+##### [lambda](https://docs.python.org/3.5/tutorial/controlflow.html#lambda-expressions)
+
+
 ### 6-Linked List
 ### 7-Binary Tree
 ### 8-Search & Recursion
